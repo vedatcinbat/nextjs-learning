@@ -1,1 +1,11 @@
+// Path: .gitignore
 **/node_modules/*
+**/bower_components/*
+**/tmp/*
+**/build/*
+**/dist/*
+**/vendor/*
+**/cache/*
+**/logs/*
+**/npm-debug.log
+**/yarn-debug.log

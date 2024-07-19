@@ -1,0 +1,121 @@
+************************************************************
+- My Own Notes - 
+
+* What is Next.js ?
+-> Next.js is a popular React framework that enables developers to build
+server-side rendered(SSR) and static websites
+-> It is developed and maintained by Vercel
+-> Next.js is known for its simplicity, performance, and ease of use, providing
+features like automatic static optimization, static site generation(SSG), 
+server-sider rendering(SSR), API routes, and more
+
+* Why Should We Use Next.js ?
+- Server-Side Rendering (SSR): Next.js allows you to render pages on the server, 
+which can improve SEO and initial load performance by providing fully rendered HTML to the client.
+- Static Site Generation (SSG): You can generate static HTML at build time, which can be served directly to users, 
+improving performance and reducing server load.
+- API Routes: Next.js provides a way to create API endpoints within the same project, simplifying the backend integration 
+and allowing for a more seamless fullstack development experience.
+- Image Optimization: Next.js has built-in support for image optimization, which can significantly improve 
+page load times by automatically optimizing images based on the user's device.
+- TypeScript Support: Next.js has built-in TypeScript support, making it easier to build and maintain large applications with type safety.
+
+
+
+* Scenarios Where Next.js is Used and Why ?
+- SEO-Driven Websites: SSR and SSG capabilities make Next.js ideal for websites where SEO is critical, 
+such as blogs, marketing sites, and e-commerce platforms.
+
+- Performance-Critical Applications: Next.js's automatic code splitting, image optimization, and static generation 
+features help build highly performant web applications.
+
+- Complex Web Applications: For applications requiring a combination of static and dynamic content, such as dashboards, 
+social media platforms, and SaaS products, Next.js provides the flexibility needed to handle different rendering needs.
+
+- E-commerce Platforms: The combination of SSR for dynamic product pages and SSG for static content like blogs or 
+landing pages makes Next.js a strong choice for e-commerce websites.
+
+- Content Management Systems (CMS): Next.js is often used with headless CMSs like Strapi, Contentful, or Sanity, 
+leveraging its ability to pre-render static pages and dynamically render content as needed.
+
+
+************************************************************
+
+
+
+************************************************************************************************************************
+- Course Notes -
+
+* What is NextJS? Why would you use it?
+-> Next.js is React framework
+-> FullStack React Framework
+-> Build fullstack apps instead of SPAs
+-> React is becomeing a hybrid library
+-> Using these features without a framework is tricky & typically not all you need
+--> Route Setup & Handling
+--> Form Submission
+--> Data Fetching 
+--> Authentication
+--> And much more
+
+-> Handles route setup & config 
+-> Handles req & res
+-> Handles data fetching & submission
+
+* Key Features & Benefits OF Next.js
+-> Fullstack Apps
+--> NextJS blends frontend + backend (in the same project)
+--> Advantage: Frontend and backend tasks are part of the same project
+
+-> File-Based Routing
+--> Routes are configured via the filesystem
+--> Advantage: No code-based configuration or extra packages for routing required
+
+-> Server-side Rendering 
+--> By default, NextJS renders all pages on the server
+--> Advantage: The finished HTML page is sent to the client (great for SEO)
+
+
+* Creating a First Next.js App
+> npx create-next-app@latest <folder-name>
+
+* App Router
+> app ---------> /
+>>awesome ------> /awesome 
+  ---- page.js -> This will rendered when '/awesome' requested
+--- pages.js -> This will rendered when '/' requested
+--- layout.js
+---....
+
+>awesome>page.js
+
+export default function AwesomePage() {
+    return (
+        <main>
+            <h1>Awesome Page</h1>
+        </main>
+    )
+}
+
+
+
+
+* Pages Router vs App Router
+- Pages Router
+--> Has been around for many years
+--> Very stable
+--> Used in many existing NextJS projects
+--> Allows you to build feature-rich fullstack apps with React
+
+- App Router
+--> Introduced with NextJS 13
+--> Marked as stable but still relatively new & buggy
+--> Supports modern Next & React features (fullstack React apps)
+--> The future of NextJS
+
+
+
+
+
+
+************************************************************************************************************************
