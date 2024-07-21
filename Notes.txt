@@ -263,7 +263,33 @@ export default function BlogPostPage({params}) {
 }
 
 
-* Foodies Project
+-------------------------------
+* Topics That I will complete in Udemy *
+1. Routing & Page Rendering - Deep Dive
+2. Data Fetching - Deep Dive
+3. Mutating Data - Deep Dive
+4. Understanding & Configuring Caching
+5. NextJS App Optimizations
+6. User Authentication
+7. Pages & File-Based Routing 
+8. Page Pre-Rendering & Data Fetching 
+9. Optimizating NextJS Apps
+10. Adding Backend Code with API Routes (Fullstack React)
+11. Working with App-wide State (React Context)
+12. Deploying NextJS Apps
+13. Adding Authentication
+14. NextJS Summary
+-------------------------------
+
+
+
+
+
+
+
+
+
+
 
 
 
