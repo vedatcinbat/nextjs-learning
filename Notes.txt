@@ -307,16 +307,37 @@ app/posts/[slug] --> my-website.com/posts/next-is-awesome
 --> Define wrapping layout for one or more pages
 
   
-* App Styling & Using Dummy Data
+* Handling "Not Found" Errors & Showing "Not Found" Pages
+-> Parallel Routes in Next.js is a feature that allows developers to create mutliple
+independent route segments that can be rendered simuleously
+-> This enables better organization of complex navigation structures and enchanged the user 
+experience by allowing different parts of a page to load in parallel
 
+- Key Features of Paralel Routes in Next.js
+-> Nested Routing: You can nest routes within each other, allowing for more structured and 
+hierarchical URL paths
+-> Route Groups: You can group related routes together
+-> Loading States: Parallel Routes enable the loading of different segments 
+independently, which can improve the perceived performance of your 
+application by displaying parts of the page while other parts are still loading
+-> Code Splitting
 
+- Example of usage Parallel Routing in Instagram Clone
+--> Scenerio: When a user navigates to a profile page, the page includes several tabs
+or sections like "Posts", "Tagged", "Saved" etc
+--> Benefit: Parralel Routes allows each section to load independently. This way, the 
+main profile details can be displayed immediately while the other sections are still 
+loading
 
+--> Scenerio: The Explore page may have various sections like "Trending", "Reels", "Popular"
+etc.
+--> Benefit: Allows different sections to load in parallel, making the Explore page feel more 
+responsive
 
-
-
-
-
-
+--> Scenerio: When a user navigates to the notifications or messages page, there could be 
+various categories or sections ("All", "Unread", "Mentions")
+--> Benefit: enable each section to load independently, ensuring that the user can 
+see the initial content while other sctions are still loading
 
 
 
