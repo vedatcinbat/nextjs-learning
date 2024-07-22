@@ -282,8 +282,32 @@ export default function BlogPostPage({params}) {
 -------------------------------
 
 
+1. Routing & Page Rendering
+-> Understanding Routing in NextJS Applications
+-> File Name Conventions & Project Structure
+-> Server Components vs Client Components
 
+* Standard Routes
+--- /about
+-> Folder name = route path
+app/about ---> my-website.com/about
 
+* Dynamic Routes
+--- /posts/<dynamic>
+-> Define dynamic segments by wrapping the folder name with []
+app/posts/[slug] --> my-website.com/posts/next-is-awesome
+
+* Layouts & Pages
+- Pages
+--> Created via pages.js
+--> Define page content (JSX) for a route
+
+- Layouts
+--> Created via layout.js file
+--> Define wrapping layout for one or more pages
+
+  
+* App Styling & Using Dummy Data
 
 
 
