@@ -501,15 +501,268 @@ be rendered on the client.
 
 
 * Nested Routes Inside Dynamic Routes
+-> We have dynamic route in news like : >news>{slug}
+-> news/will-ai-replace-humans
+-> news/.......
+
+-> If we want to return static route inside dynamic route we should create another folder inside 
+dynamic folder
+-> For example if we want to create image path when image has been clicked in news/.....
+-> We should add another folder called "image" after [slug]
+>news>[slug]>image>page.js
+
+import { DUMMY_NEWS } from "@/dummy-news";
+
+export default function ImagePage({ params }) {
+    const newsItemSlug = params.slug;
+    const newsItem = DUMMY_NEWS.find((news) => news.slug == newsItemSlug);
+
+    if (!newsItem) {
+        notFound();
+    }
+
+    return (
+        <div className="fullscreen-image">
+            <img src={`/images/news/${newsItem.image}`} alt={newsItem.title} />
+        </div>
+    )
+}
+
+-> And we should update the Link of the image that rendering on the news/.....
+
+<Link href={`/news/${newsItem.slug}/image`}>
+  <img src={`/images/news/${newsItems.image}`} alt={newsItem.title} />
+</Link>
+
+
+<article className="news-article">
+            <header>
+                +<Link href={`/news/${newsItem.slug}/image`}>
+                  +<img src={`/images/news/${newsItem.image}`} alt={newsItem.title} />
+                +</Link>
+                <h1>{newsItem.title}</h1>
+                <time dateTime={newsItem.date}>{newsItem.date}</time>
+            </header>
+            <p>{newsItem.content}</p>
+        </article>
+
+
+* Intercepting Navigation & Using Interception Routes
+-> In Next.js, intercepted routes are a powerful feature that allows you to overlay 
+or "intercept" a route within the current page without causing a full page reload
+-> This concept is particularly useful for creating seamless user experiences where 
+part of a page need to change without disrupting the overall layout or causing a ful navigation
+
+-- Key Concepts of Intercepted Routes
+-> 1. Overlay Navigation
+--> Intercepted routes can be used to create overlays or modal-like experiences 
+where the new content is displayed over the existing content
+--> This is commonly seen in applications for things like product previews, quick views,
+or modal dialogs
+
+-> 2. Partial Page Updates
+--> Instead of reloading the entire page, intercepted routes allow specific parts 
+of the page to update
+
+-> 3. URL Structure
+--> The URL can change to reflect the intercepted route, providing better state 
+management and allowing users to share a bookmark specific states of the application
 
 
 
+* Combining Parallel & Intercepting Routes
+-> By combining these two techniques, you can create sophisticated layouts where different parts of the page can independently update or show overlays without disrupting the entire page. This combination is especially beneficial in scenarios like:
+
+- Dashboards: Where you have multiple widgets or panels that need to load different data simultaneously and allow for quick detail views or actions without navigating away.
+- E-commerce Sites: Where you want to show product lists and allow users to quickly view product details in an overlay without leaving the product list.
+- Content Management Systems (CMS): Where different sections of the admin panel need to load independently, and actions like editing or viewing details can be done via overlays.
+
+* Navigating Programmatically
+-> import {useRouter} from "next/navigation";
+
+const router = useRouter();
+
+<div className="modal-backdrop" onClick={router.back} />
+
+* Using & Understanding Route Groups
+-> If we want to group routes for giving different layout for each, we use () folder with the route group name like (content) (marketing)
+-> Create (content) folder and move that archive and news folder to that and create layout.js and not-found.js for that content route group
+-> This layout will hold for example MainHeader but homepage should not
+-> For that reason, (content)>layout.js will like this : 
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <div id="page">
+          <MainHeader />
+          <main>
+            {children}
+          </main>
+        </div>
+      </body>
+    </html>
+  )
+}
+
+-> But in (marketing) route group there wont be mainHeader. There will be just children
+
+export default function RootLayout({ children }) {
+    return (
+        <html lang="en">
+            <body>
+                {children}
+            </body>
+        </html>
+    )
+}
+
+
+* Building APIs with Route Handlers
+-> Building APIs with route handlers in Next.js involves creating endpoints 
+within your application that can handle HTTP requests and return responses.
+-> This feature is part of the Next.js API routes, which provide a way to create 
+server-side API endpoints within your Next.js application
+
+* Key Concepts
+-> API Routes: API routes provide a way to create backend logic directly within your Next.js app. They are located in the pages/api directory.
+-> Route Handlers: These are functions that handle incoming HTTP requests (like GET, POST, PUT, DELETE) and send appropriate responses.
+-> Dynamic API Routes: You can create dynamic API routes to handle more complex scenarios, such as routes with parameters.
+
+
+app/
+├── api/
+│   └── route.js
+│   └── users.js
+
+- route.js
+export default function handler(req, res) {
+    res.status(200).json({ message: 'Hello, World!' });
+}
+
+o This creates a simple API endpoint at /api/hello that responds 
+with a JSON message.
+
+- users.js
+export default function handler(req, res) {
+    if (req.method === 'GET') {
+        // Handle GET request
+        res.status(200).json({ message: 'Fetching users...' });
+    } else if (req.method === 'POST') {
+        // Handle POST request
+        const newUser = req.body;
+        res.status(201).json({ message: 'User created', user: newUser });
+    } else {
+        res.status(405).json({ message: 'Method not allowed' });
+    }
+}
+
+o This handles both GET and POST requests at /api/users, returning different responses based on the HTTP method.
+
+Dynamic API Routes
+File Structure:
+pages/
+├── api/
+│   └── users/
+│       └── [id].js
+
+export default function handler(req, res) {
+    const { id } = req.query;
+    if (req.method === 'GET') {
+        // Fetch user by ID
+        res.status(200).json({ message: `Fetching user with ID ${id}` });
+    } else if (req.method === 'PUT') {
+        // Update user by ID
+        const updatedUser = req.body;
+        res.status(200).json({ message: `Updating user with ID ${id}`, user: updatedUser });
+    } else if (req.method === 'DELETE') {
+        // Delete user by ID
+        res.status(200).json({ message: `Deleting user with ID ${id}` });
+    } else {
+        res.status(405).json({ message: 'Method not allowed' });
+    }
+}
+
+o This allows you to handle requests for specific user IDs at /api/users/[id].
 
 
 
+* Using Middleware
+-> Middleware in Next.js is a powerful feature that allows you to run code before a request 
+is completed
+-> Middleware is useful for various tasks such as authentication, logging, and other pre-processing
+actions
+-> It enables you to have fine-grained control over the incoming requests and responses
+
+-- Key Concepts of Middlewares in Next.js
+-> Middleware File Location
+--> Middleware in Next.js is defined in a file named "middleware.js" or "middleware.ts" at 
+the root of your project
+--> This file exports a function that processes requests
+
+-> Middleware Function
+--> The middleware function takes a 'NextRequest' object and returns a 'NextResponse' object
+--> You can modify the response or request, redirect the request, or perform other actions
+
+-> Middleware Configuration
+--> Middleware can be configured to run on specific routes using the "matcher" property in  
+next.config.js
 
 
+* Creating Middleware
+1. Basics Middleware Example
+- middleware.js
+import { NextResponse } from "next/server"
 
+export function middleware(req) {
+    console.log(`Request URL: {req.url}`);
+
+    return NextResponse.next();
+}
+
+2. Authentication Example
+import { NextResponse } from 'next/server';
+export function middleware(req) {
+    const token = req.cookies.get('auth-token');
+
+    if (!token) {
+        // Redirect to login if the token is missing
+        return NextResponse.redirect('/login');
+    }
+
+    // Allow the request to proceed if authenticated
+    return NextResponse.next();
+}
+
+
+* Multiple Middlewares 
+
+import { NextResponse } from 'next/server';
+
+// Authentication Middleware
+function authMiddleware(req) {
+    const token = req.cookies.get('auth-token');
+    if (!token) {
+        return NextResponse.redirect('/login');
+    }
+    return NextResponse.next();
+}
+
+// Logging Middleware
+function loggingMiddleware(req) {
+    console.log('Request URL:', req.url);
+    return NextResponse.next();
+}
+
+// Rate Limiting Middleware
+function rateLimitMiddleware(req) {
+    // Dummy rate limiting logic
+    const tooManyRequests = false; // Replace with actual rate limiting logic
+    if (tooManyRequests) {
+        return NextResponse.json({ message: 'Too many requests' }, { status: 429 });
+    }
+    return NextResponse.next();
+}
 
 
 
