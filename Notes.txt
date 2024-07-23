@@ -340,9 +340,29 @@ various categories or sections ("All", "Unread", "Mentions")
 see the initial content while other sctions are still loading
 
 
+* Parallel Routing Notes
+-- Parallel Routing
+-> Parallel routing allows you to render multiple routes at the same time
+-> This can be useful for complex layouts where different parts of the page need to load different content 
+independently
+-> In Next.js, this can be achieved using nested routes and layout files
 
+-- Nested Routes
+-> Nested routes are that live within other routes
+-> They allow for a hierarchical structure of routes which can be used to create complex layouts with multiple 
+nested components
+-> In Next.js, you create nested routes by placing files and directories inside app directory
 
+-- Catch-All Routes
+-> Catch-all routes are used to match any route that falls under a certain path
+-> This is useful when you want to handle a variety of dynamic paths with a single component
+-> In Next.js, you create a catch-all route by using square brackets with three dots inside a file name 
+like [...slug].js
+-> Example: /app/blog/[...slug].js
+-> This route would match: /blog/a | /blog/a/b | /blog/a/b/c
 
-
-
+-- Catch-All Fallback Routes
+-> Catch-all fallback routes are similar to catch-all routes but are used to provide a fallback for 
+unmatched routes
+-> This is typically used in dynamic routing to handle routes that do not match any defined paths
 ************************************************************************************************************************
