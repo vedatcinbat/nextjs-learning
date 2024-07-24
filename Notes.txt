@@ -263,25 +263,6 @@ export default function BlogPostPage({params}) {
 }
 
 
--------------------------------
-* Topics That I will complete in Udemy *
-1. Routing & Page Rendering - Deep Dive
-2. Data Fetching - Deep Dive
-3. Mutating Data - Deep Dive
-4. Understanding & Configuring Caching
-5. NextJS App Optimizations
-6. User Authentication
-7. Pages & File-Based Routing 
-8. Page Pre-Rendering & Data Fetching 
-9. Optimizating NextJS Apps
-10. Adding Backend Code with API Routes (Fullstack React)
-11. Working with App-wide State (React Context)
-12. Deploying NextJS Apps
-13. Adding Authentication
-14. NextJS Summary
--------------------------------
-
-
 1. Routing & Page Rendering
 -> Understanding Routing in NextJS Applications
 -> File Name Conventions & Project Structure
@@ -765,6 +746,163 @@ function rateLimitMiddleware(req) {
 }
 
 
+* Data Fetching - Deep Dive
+-> Data fetching in Next.js is a fundamental aspect of building dynamic applications
+-> It allows you to fetch data from various sources like API, databases or other services, 
+and integrate it into your pages before rendering
+-> There are several methods to hadnle data fetching, catering to different needs and 
+scenerios, including static generation, server-side rendering, and client-side rendering
+
+-- Key Methods for Data Fetching in Next.js
+-> 1. Static Generation (SSG) with 'getStaticProps'
+-> 2. Server-side Rendering (SSR) with 'getServerSideProps'
+-> 3. Client-side Rendering (CSR) with 'useEffect' or other client-side hooks
+-> 4. Incremental Static Regeneration (ISR)
+
+---- Course Notes
+-> Option1: Client-Side Data Fetching
+--> For example we have a backend code with url : localhost:8080/news that returns news object
+--> We can use "fetch" and "useState/useEffect" from our News component and fetch data from 
+client-side component
+
+>news>page.js
+"use client" // useState and useEffect only works with "client-side components"
+import {useState, useEffect} from "react";
+
+export default NewsPage() {
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
+    const [news, setNews] = useState([]);
+
+    useEffect(() => {
+        async function fetchNews() {
+            setIsLoading(true);
+            const response = await fetch('http://localhost:8080/news');
+
+            if(!response.ok) {
+                setError('Failed to fetch news');
+                setIsLoading(false);
+            }
+
+            const news = await response.json();
+            setIsLoading(false);
+            setNews(news);
+        }
+
+        fetchNews();
+    }, [])
+
+    if(isLoading) {
+        return <div>Loading...</div>
+    }
+
+    if(error) {
+        return <div>Errro while fetching news data</div>
+    }
+
+    let newsContent;
+
+    if(news) {
+        newsContent = <NewsList news={news} />
+    }
+
+    return (
+        <>
+            <h1>News Page</h1>
+            {newsContent}
+        </>
+    )
+}
+
+-> Option2: Server-side Data Fetching
+--> We could call API direclty from our NewsPage server-side component if we delete "use client" and 
+remove all client-side related features like useState and useEffect
+--> And we should call that NewsPage with async key 
+
+export default async function NewsPage() {
+    const response = await fetch('http://localhost:8080/news');
+
+    if(!response.ok) {
+        throw new Error('Failed to fetch news');
+    }
+
+    const news = await response.json();
+
+    return (
+        <>
+            <h1>News Page</h1>
+            <NewesList news={news} />
+        </>
+    )
+
+}
+
+-> Now we can access the details about newsLists elements from source code beacuse all data comes from 
+server.
+-> We are not losing any data while getting these data unlike client-side components
+
+
+
+* Why Use A Seperate Backend? Fetching Directly From The Source
+-> We can take data.db and put that in the app folder 
+-> And then we can update the lib>news.js file and update the getAllNews function
+-> But we need to install "better-sql3" for accessing that db and working with that db
+
+lib>news.js
+import sql from "better-sql3";
+
+const db = sql('data.db');
+
+
+export function getAllNews() {
+    const news = db.prepare('SELECT * FROM news').all();
+    return news;
+}
+
+-> Now we can use this "getAllNews()" function instead of using fetch from our NewsPage component
+
+- news>page.js
+...
+import { getAllNews } from "@/lib/news"
+
+export default async function NewsPage() {
+    + const news = getAllNews();
+
+    return (
+        ..
+    )
+}
+
+* Showing A "Loading" Fallback
+-> Sometimes data is not coming fast so for that reason we have to await
+-> But we dont show any response to the user, its not ui/ux
+-> For simulating this, getAllNews will run async and we will execute 1sec delay for testing purpose
+with new Promise
+
+export async function getAllNews() {
+    const news = await db.prepare('SELECT * FROM news').all();
+    +await new Promise((resolve) => setTimeout(resolve, 1000));
+    return news;
+}
+
+>news>page.js
+export default async function NewsPage() {
+    const news = +await+ getAllNews();
+    ...
+}
+
+-> Create "loading.js" file for handling 
+>news>loading.js
+export default function Loading() {
+    return <div>Loading...</div>;
+}
+
+
+
+
+
+
 
 
 
@@ -773,3 +911,23 @@ function rateLimitMiddleware(req) {
 
 
 ************************************************************************************************************************
+
+
+
+-------------------------------
+* Topics That I will complete in Udemy *
+1. Routing & Page Rendering - Deep Dive - DONE
+2. Data Fetching - Deep Dive
+3. Mutating Data - Deep Dive
+4. Understanding & Configuring Caching
+5. NextJS App Optimizations
+6. User Authentication
+7. Pages & File-Based Routing 
+8. Page Pre-Rendering & Data Fetching 
+9. Optimizating NextJS Apps
+10. Adding Backend Code with API Routes (Fullstack React)
+11. Working with App-wide State (React Context)
+12. Deploying NextJS Apps
+13. Adding Authentication
+14. NextJS Summary
+-------------------------------
