@@ -746,7 +746,7 @@ function rateLimitMiddleware(req) {
 }
 
 
-* Data Fetching - Deep Dive
+********* Data Fetching - Deep Dive *********
 -> Data fetching in Next.js is a fundamental aspect of building dynamic applications
 -> It allows you to fetch data from various sources like API, databases or other services, 
 and integrate it into your pages before rendering
@@ -898,7 +898,7 @@ export default function Loading() {
     return <div>Loading...</div>;
 }
 
-
+********* Mutating Data - Deep Dive *********
 
 
 
@@ -917,7 +917,7 @@ export default function Loading() {
 -------------------------------
 * Topics That I will complete in Udemy *
 1. Routing & Page Rendering - Deep Dive - DONE
-2. Data Fetching - Deep Dive
+2. Data Fetching - Deep Dive - DONE
 3. Mutating Data - Deep Dive
 4. Understanding & Configuring Caching
 5. NextJS App Optimizations
