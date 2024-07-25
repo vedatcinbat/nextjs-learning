@@ -899,6 +899,61 @@ export default function Loading() {
 }
 
 ********* Mutating Data - Deep Dive *********
+revalidatePath:
+
+Used for programmatic, on-demand revalidation.
+Triggered by specific events or actions (e.g., an API call, data update).
+Useful for cases where you want immediate revalidation after a certain event occurs, such as a content update in a CMS.
+revalidate:
+
+Used for periodic revalidation based on a time interval.
+Defined in getStaticProps to automatically revalidate the page after the specified number of seconds.
+Useful for ensuring that static pages are periodically updated with fresh data without manual intervention.
+Summary
+revalidatePath: Allows for programmatically triggering the revalidation of specific paths, providing control over when and which pages should be updated.
+revalidate: Sets an interval for automatic revalidation, ensuring that static pages are refreshed at regular intervals without manual triggering.
+
+
+
+
+
+
+
+
+******* Understanding & Configuring Caching in Next.js ******* 
+1. Request Memoization
+-> NextJS stores data requests with the same configuration
+-> This avoids unnecessary duplicate data fetches
+-> Cache only persists during request duration
+
+2. Data Cache
+-> NextJS stores & reuses fetched data until it's revalidated
+-> This avoids unnecessary requests to the data source & speeds up the application
+-> The cache persists until its revalidated 
+
+3. Full Route Cache
+-> NextJS stores the rendered HTML & RSC at build time
+-> This avoids unnecessary HTML render cycles & data fetches
+-> The cache persists unitl the related data cache is revalidated
+
+4. Router Cache
+-> NextJS stores the RSC payload in memory in the browser
+-> This ensures extremelty fast page transitions since no server request is needed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -918,7 +973,7 @@ export default function Loading() {
 * Topics That I will complete in Udemy *
 1. Routing & Page Rendering - Deep Dive - DONE
 2. Data Fetching - Deep Dive - DONE
-3. Mutating Data - Deep Dive
+3. Mutating Data - Deep Dive - DONE
 4. Understanding & Configuring Caching
 5. NextJS App Optimizations
 6. User Authentication
