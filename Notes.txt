@@ -1019,27 +1019,74 @@ next part
 
 
 * Setting Up Request Memoization For Custom Data Source
+export const getMessages = cache(function getMessages() {
+    console.log('Fetching messages from db');
+    return db.prepare('SELECT * FROM messages').all();
+})
+
+-> The purpose of wrapping the 'getMessages' function with 'cache' is to store 
+the results of the database query so that subsequent calls to 'getMessages' can
+return the cached data instead of hitting the database again
+-> This improves performance by reducing the number of database queries, which can 
+be expensive in terms of time and resources
 
 
+* Setting Up Data Caching For Custom Data Sources
+export const getMessages = nextCache(
+  cache(function getMessages() {
+    console.log('Fetching messages from db');
+    return db.prepare('SELECT * FROM messages').all();
+  }), ['messages']
+)
 
 
+const messages = await getMessages();
 
 
+* Invalid Custom Data Source Data
+-> There is delay of after adding that "message"
+-> We can solve that problem with two ways: 
+1. revalidatePath('/messages');
+2. revalidateTag('msg')
 
 
+1. revalidatePath after addMessage(message);
+async function createMessage(formData) {
+    'use server';
+    const message = formData.get('message');
+    addMessage(message);
+    
+    +revalidatePath('/messages'); */
+    // All things have gone and re-validate after message has been added
+    
+    redirect('/messages');
+}
+
+2. revalidateTag()
+-> Add "tags" to getMessages and after addingMessage run that "revalidateTag" function with 
+the tag names
 
 
+export const getMessages = nextCache(
+  cache(function getMessages() {
+    console.log('Fetching messages from db');
+    return db.prepare('SELECT * FROM messages').all();
+  }), ['messages'], {
+    tags: ['msg']
+  }
+)
 
 
-
-
-
-
-
-
-
-
-
+async function createMessage(formData) {
+    'use server';
+    const message = formData.get('message');
+    addMessage(message);
+    
+    +revalidateTag('msg'); */
+    // All things have gone and re-validate after message has been added
+    
+    redirect('/messages');
+}
 
 ************************************************************************************************************************
 
@@ -1050,7 +1097,7 @@ next part
 1. Routing & Page Rendering - Deep Dive - DONE
 2. Data Fetching - Deep Dive - DONE
 3. Mutating Data - Deep Dive - DONE
-4. Understanding & Configuring Caching
+4. Understanding & Configuring Caching - DONE
 5. NextJS App Optimizations
 6. User Authentication
 7. Pages & File-Based Routing 

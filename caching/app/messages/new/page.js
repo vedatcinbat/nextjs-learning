@@ -11,7 +11,9 @@ export default function NewMessagePage() {
     addMessage(message);
     /* revalidatePath('/messages');
     revalidatePath('/', 'layout'); */
-    revalidateTag('msg') // revalidate all pages with the 'msg' tag
+    //revalidateTag('msg') // revalidate all pages with the 'msg' tag
+    //1. revalidatePath('/messages')
+    revalidateTag('msg')
     redirect('/messages');
   }
 
