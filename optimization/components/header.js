@@ -5,7 +5,12 @@ export default function Header() {
   return (
     <header id="main-header">
       <Link href="/">
-        <img src={logo.src} alt="Mobile phone with posts feed on it" />
+        <Image 
+          src={logo}
+          width={150}
+          height={150} 
+          alt="Mobile phone with posts feed on it" 
+        />
       </Link>
       <nav>
         <ul>

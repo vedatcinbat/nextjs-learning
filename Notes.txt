@@ -1088,6 +1088,35 @@ async function createMessage(formData) {
     redirect('/messages');
 }
 
+
+******* NextJS App Optimizations *******
+-> Optimizing a Next.js application involves several techniques to enhance performance, 
+improve loading times, and ensure a smooth user experience. Below are key optimization strategies:
+
+
+* Image Optimization
+-> Next.js provides a built-in Image component that optimizes images on-demand for different screen 
+sizes and formats.
+
+import Image from 'next/image';
+
+const Home = () => {
+  return (
+    <div>
+      <h1>Welcome to our site</h1>
+      <Image
+        src="/me.png"
+        alt="Picture of the author"
+        width={500}
+        height={500}
+      />
+    </div>
+  );
+};
+
+export default Home;
+
+
 ************************************************************************************************************************
 
 
@@ -1098,7 +1127,7 @@ async function createMessage(formData) {
 2. Data Fetching - Deep Dive - DONE
 3. Mutating Data - Deep Dive - DONE
 4. Understanding & Configuring Caching - DONE
-5. NextJS App Optimizations
+5. NextJS App Optimizations - DONE
 6. User Authentication
 7. Pages & File-Based Routing 
 8. Page Pre-Rendering & Data Fetching 
