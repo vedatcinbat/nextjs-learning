@@ -944,6 +944,82 @@ revalidate: Sets an interval for automatic revalidation, ensuring that static pa
 
 
 
+1. Request Memoization
+-> Request memoization is a technique used to store the results of expensive function calls 
+and reuse them when the same inputs occur again
+-> This can significantly reduce the number of API requests or database queries, improving 
+performance and efficiency
+-> In this context of NextJS, request memoization can be implemented to cache the results of 
+API calls or other data-fetching functions
+
+
+* Understanding The Data Cache & Cache Settings
+export deafult async function MessagesPage() {
+    const response = await fetch('http://localhost:8080', {
+        next: {
+            revalidate: 2 // Every two second, it will "revalidate" the incoming api response
+        }
+    })
+}
+
+-> next.revalidate: Provides a balance between performance and freshness by caching the 
+data for a specified period before revalidating it. This reduces the number of 
+fetch operations while ensuring the data is still relatively fresh.
+
+* Controlling Data Caching
+
+> export const revalidate = 2; // It is a reserved word that Next.js is looking for 
+-> It is the same as (....., {
+    next: {
+        revalidate: 2
+    }
+})
+
+> export const dynamic = 'force-dynamic';
+> epxort const dynamic = 'force-static';
+
+-> Or you can import "unstable_noStore" from "next/cache" and use that inside 
+a component
+
+export default async function MessagesPage() {
+    unstable_noStore();
+}
+
+
+* On-Demand Cache Invalidation with revalidatePath & revalidateTag
+-> Sometimes 'export const revalidate = 5' and "export const dynamic = ..."
+may not be the best choice
+-> We can use "revalidatePath()" for revalidate the page and render when that 
+path visited
+
+import {revalidatePath, revalidateTag} from "next/cache"
+
+async function createMessage(formData) {
+    "use server";
+
+    const message = formData.get('message');
+    addMessage(message);
+
+    +revalidatePath('/messages', 'layout');
+    +revalidateTag('msg');
+}
+
+-> You can add options for fetch with the attribute "tag" and you can import 
+tags into that attribute 
+
+const response = await fetch('....', {
+    next: {
+        tags: ['msg']
+    }
+})
+
+-> Now, every fetch request will be revalidated where that tags included in the 
+next part
+
+
+
+* Setting Up Request Memoization For Custom Data Source
+
 
 
 
