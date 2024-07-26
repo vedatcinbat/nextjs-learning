@@ -1128,7 +1128,7 @@ export default Home;
 3. Mutating Data - Deep Dive - DONE
 4. Understanding & Configuring Caching - DONE
 5. NextJS App Optimizations - DONE
-6. User Authentication
+6. User Authentication - DONE
 7. Pages & File-Based Routing 
 8. Page Pre-Rendering & Data Fetching 
 9. Optimizating NextJS Apps
